@@ -8,19 +8,18 @@ export default function ContactList() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectNameFilter);
-  const contactCartsList = contacts.map((item) => {
-    if (item.name.indexOf(filter) < 0) return;
-    else {
-      return (
-        <Contact
-          key={item.id}
-          item={item}
-          onDelete={() => {
-            dispatch(deleteContact(item.id));
-          }}
-        />
-      );
-    }
+  const contactsFilter = contacts.map((item) => {
+    contacts.filter((item) => item.name.indexOf(filter) >= 0);
+
+    return (
+      <Contact
+        key={item.id}
+        item={item}
+        onDelete={() => {
+          dispatch(deleteContact(item.id));
+        }}
+      />
+    );
   });
-  return <ul className={styles.contactList}>{contactCartsList}</ul>;
+  return <ul className={styles.contactList}>{contactsFilter}</ul>;
 }
